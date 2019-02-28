@@ -27,9 +27,3 @@ for label in C:
        print('label {0}:　{1}'.format(label, data[point_idx]))
 
 ######################################
-
-num_clusters = 0
-mat = np.array([[0, 2, 6, 10, 9], [2, 0, 5, 9, 8], [6, 5, 0, 4, 5], [10, 9, 4, 0, 3], [9, 8, 5, 3, 0]])
-all_elements = ['a', 'b', 'c', 'd', 'e']
-dissimilarity_matrix = pd.DataFrame(mat, index=all_elements, columns=all_elements)
-
