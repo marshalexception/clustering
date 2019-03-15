@@ -29,16 +29,15 @@ M, C = kMedoid.kMedoids(X, 18)
 
 #plt.scatter(C, 50)
 
-print(C)
-
 print('medoids:')
-#for point_idx in M:
- #   print( data[point_idx] )
+for point_idx in M:
+    print( point_idx )
 
 print('')
 print('clustering result:')
-#for label in C:
-#    for point_idx in C[label]:
+for label in C:
+    for point_idx in C[label]:
+        print(label, point_idx)
  #      print('label {0}:　{1}'.format(label, data[point_idx]))
 
 #file = open("matrix_pfister.txt", "r+")
