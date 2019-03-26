@@ -1,6 +1,7 @@
 import os
 
 from sklearn.metrics.pairwise import pairwise_distances
+from sklearn.metrics import silhouette_score
 import numpy as np
 from numpy import genfromtxt
 import matplotlib.pyplot as plt
@@ -26,19 +27,20 @@ DD = genfromtxt('matrix.txt', delimiter=";")
 
 # split into 2 clusters
 M, C = kMedoid.kMedoids(D, 14)
-
+#labels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
 #plt.scatter(C, 50)
 
 print('medoids:')
 for point_idx in M:
-    print( point_idx )
+    print(point_idx)
 
 print('')
 print('clustering result:')
 for label in C:
     for point_idx in C[label]:
-        print(label, point_idx)
+        print("Graph:", point_idx, "Cluster:", label)
 
+#print(silhouette_score(D))
  #      print('label {0}:　{1}'.format(label, data[point_idx]))
 
 #file = open("matrix_pfister.txt", "r+")
