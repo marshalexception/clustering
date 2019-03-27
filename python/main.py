@@ -1,6 +1,7 @@
 from sklearn.metrics.pairwise import pairwise_distances
 from sklearn.metrics import silhouette_score
 from numpy import genfromtxt
+import matplotlib.pyplot as plt
 
 """Pytest installieren: python -m pip install pytest"""
 
@@ -28,7 +29,7 @@ def best_silhouette(border, score, matrix, k):
     print(cur_score)
 
 
-data = genfromtxt('..\\data\\pfister\\vectors_new.txt', delimiter=";")
+data = genfromtxt('..\\data\\pfister\\vectors_5.txt', delimiter=";")
 """bei vectors_5 nicht die ersten 5 Graphen sondern manuelle Auswahl
     Cluster (0,2), (1,4) und (3) """
 
@@ -37,10 +38,9 @@ D = pairwise_distances(data, metric='euclidean')
 DD = genfromtxt('..\\data\\pfister\\matrix_5.txt', delimiter=";")
 
 """K Cluster"""
-k = 18
+k = 3
 M, C = kMedoid.kMedoids(D, k)
 
-# plt.scatter(C, 50)
 labels = []
 
 print('medoids:')
@@ -56,9 +56,13 @@ for label in C:
 
 score = silhouette_score(D, labels, metric="euclidean")
 print(score)
+for label in C:
+    for point_idx in C[label]:
+        plt.scatter(point_idx, label, s=50)
+plt.show()
 
-best_silhouette(-0.103, score, D, k)
+#best_silhouette(-0.1031, score, D, k)
 
 # 5:
 # 25: 0.02
-# 86: -0.1029
+# 86: -0.1015
