@@ -67,7 +67,3 @@ def kMedoids(D, k, tmax=100):
 
     # return results
     return M, C
-
-
-def fit_predict(self, X, y=None, sample_weight=None):
-    return 0
