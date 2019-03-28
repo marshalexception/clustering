@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="bf569f04-a1a7-4ba3-b5f1-51d4b8a2c6bd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/pfister/matrix_new.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/pfister/vectors_new.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/pfister/vectors_new.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/pfister/matrix_25.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/pfister/matrix_25.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/pfister/matrix_5.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/pfister/matrix_5.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/python/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/python/main.py" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -15,14 +15,14 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/clustering$main.coverage" NAME="main Coverage Results" MODIFIED="1553770250858" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python" />
+    <SUITE FILE_PATH="coverage/clustering$main.coverage" NAME="main Coverage Results" MODIFIED="1553775386138" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/python" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/python/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
+            <state relative-caret-position="204">
               <caret line="63" column="22" selection-start-line="63" selection-start-column="22" selection-end-line="63" selection-end-column="22" />
               <folding>
                 <element signature="e#0#55#0" expanded="true" />
@@ -56,6 +56,8 @@
         <option value="$PROJECT_DIR$/python/bla.txt" />
         <option value="$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/site-packages/sklearn/utils/validation.py" />
         <option value="$PROJECT_DIR$/python/algorithms/kMedoid.py" />
+        <option value="$PROJECT_DIR$/data/pfister/matrix_25.txt" />
+        <option value="$PROJECT_DIR$/data/pfister/matrix_5.txt" />
         <option value="$PROJECT_DIR$/python/main.py" />
       </list>
     </option>
@@ -86,6 +88,12 @@
               <item name="clustering" type="b2602c69:ProjectViewProjectNode" />
               <item name="clustering" type="462c0819:PsiDirectoryNode" />
               <item name="data" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="clustering" type="b2602c69:ProjectViewProjectNode" />
+              <item name="clustering" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+              <item name="pfister" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="clustering" type="b2602c69:ProjectViewProjectNode" />
@@ -184,18 +192,19 @@
       <workItem from="1553617188913" duration="915000" />
       <workItem from="1553618256320" duration="1486000" />
       <workItem from="1553694707789" duration="9880000" />
-      <workItem from="1553768667825" duration="1730000" />
+      <workItem from="1553768667825" duration="1795000" />
+      <workItem from="1553772209183" duration="2457000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22502000" />
+    <option name="totallyTimeSpent" value="25024000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49512196" visible="true" weight="0.2927383" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49512196" visible="true" weight="0.29727685" />
       <window_info id="Structure" order="1" sideWeight="0.50487804" side_tool="true" weight="0.2881997" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -204,7 +213,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3289689" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33224222" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -275,9 +284,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/data/pfister/matrix_25.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="24" column="468" selection-start-line="24" selection-start-column="468" selection-end-line="24" selection-end-column="468" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/pfister/matrix_5.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="80" selection-start-line="4" selection-start-column="80" selection-end-line="4" selection-end-column="80" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/pfister/matrix_full.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1587" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/python/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
+        <state relative-caret-position="204">
           <caret line="63" column="22" selection-start-line="63" selection-start-column="22" selection-end-line="63" selection-end-column="22" />
           <folding>
             <element signature="e#0#55#0" expanded="true" />

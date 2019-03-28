@@ -29,13 +29,13 @@ def best_silhouette(border, score, matrix, k):
     print(cur_score)
 
 
-data = genfromtxt('..\\data\\pfister\\vectors_full.txt', delimiter=";")
+data = genfromtxt('..\\data\\pfister\\vectors_new.txt', delimiter=";")
 """bei vectors_5 nicht die ersten 5 Graphen sondern manuelle Auswahl
     Cluster (0,2), (1,4) und (3) """
 
 """Distanzmatrix"""
 D = pairwise_distances(data, metric='euclidean')
-DD = genfromtxt('..\\data\\pfister\\matrix_5.txt', delimiter=";")
+DD = genfromtxt('..\\data\\pfister\\matrix_full.txt', delimiter=";")
 
 """K Cluster"""
 k = 18
@@ -61,7 +61,7 @@ for label in C:
         plt.scatter(point_idx, label, s=50)
 # plt.show()
 
-best_silhouette(-0.112, score, D, k)
+#best_silhouette(-0.115, score, D, k)
 
 # 5:
 # 25 (14): -0.069
