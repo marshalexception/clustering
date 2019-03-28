@@ -29,23 +29,22 @@ def best_silhouette(border, score, matrix, k):
     print(cur_score)
 
 
-data = genfromtxt('..\\data\\pfister\\vectors_new.txt', delimiter=";")
+data = genfromtxt('..\\data\\pfister\\vectors_25.txt', delimiter=";")
 """bei vectors_5 nicht die ersten 5 Graphen sondern manuelle Auswahl
     Cluster (0,2), (1,4) und (3) """
 
 """Distanzmatrix"""
 D = pairwise_distances(data, metric='euclidean')
-DD = genfromtxt('..\\data\\pfister\\matrix_full.txt', delimiter=";")
-
+DD = genfromtxt('..\\data\\pfister\\matrix_25.txt', delimiter=";")
+print(D, DD)
 """K Cluster"""
-k = 18
+k = 14
 M, C = kMedoid.kMedoids(D, k)
 
 labels = []
 
-print('medoids:')
-for point_idx in M:
-    print(point_idx)
+print('medoids:', M)
+
 
 print('')
 print('clustering result:')
@@ -58,12 +57,18 @@ score = silhouette_score(D, labels, metric="euclidean")
 print(score)
 for label in C:
     for point_idx in C[label]:
-        plt.scatter(point_idx, label, s=50)
-# plt.show()
-
-#best_silhouette(-0.115, score, D, k)
+        if label == 1:
+            plt.scatter(point_idx, label, s=50, c='red')
+        elif label == 2:
+            plt.scatter(point_idx, label, s=50, c='blue')
+        elif label == 3:
+            plt.scatter(point_idx, label, s=50, c='green')
+        else:
+            plt.scatter(point_idx, label, s=50)
+#plt.show()
+#best_silhouette(-0.099, score, D, k)
 
 # 5:
-# 25 (14): -0.069
-# 88 (18): -0.119
-# 110 (18): -0.112
+# 25 (14): -0.062
+# 88 (18): -0.109
+# 110 (18): -0.109
