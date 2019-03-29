@@ -72,3 +72,5 @@ for label in C:
 # 25 (14): -0.062
 # 88 (18): -0.109
 # 110 (18): -0.109
+
+# https://nlp.stanford.edu/IR-book/html/htmledition/evaluation-of-clustering-1.html
