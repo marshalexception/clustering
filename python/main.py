@@ -2,6 +2,7 @@ from sklearn.metrics.pairwise import pairwise_distances
 from sklearn.metrics import silhouette_score
 from numpy import genfromtxt
 import matplotlib.pyplot as plt
+from scipy.cluster.hierarchy import dendrogram
 
 """Pytest installieren: python -m pip install pytest"""
 
@@ -29,16 +30,16 @@ def best_silhouette(border, score, matrix, k):
     print(cur_score)
 
 
-data = genfromtxt('..\\data\\pfister\\vectors_25.txt', delimiter=";")
+data = genfromtxt('..\\data\\pfister\\vectors_5.txt', delimiter=";")
 """bei vectors_5 nicht die ersten 5 Graphen sondern manuelle Auswahl
     Cluster (0,2), (1,4) und (3) """
 
 """Distanzmatrix"""
 D = pairwise_distances(data, metric='euclidean')
 DD = genfromtxt('..\\data\\pfister\\matrix_25.txt', delimiter=";")
-print(D, DD)
+
 """K Cluster"""
-k = 14
+k = 4
 M, C = kMedoid.kMedoids(D, k)
 
 labels = []
@@ -57,20 +58,26 @@ score = silhouette_score(D, labels, metric="euclidean")
 print(score)
 for label in C:
     for point_idx in C[label]:
-        if label == 1:
+        if label == 0:
             plt.scatter(point_idx, label, s=50, c='red')
-        elif label == 2:
+        elif label == 1:
             plt.scatter(point_idx, label, s=50, c='blue')
-        elif label == 3:
+        elif label == 2:
             plt.scatter(point_idx, label, s=50, c='green')
         else:
             plt.scatter(point_idx, label, s=50)
-#plt.show()
-#best_silhouette(-0.099, score, D, k)
+# plt.xlabel("Graph")
+# plt.ylabel("Cluster")
+# plt.show()
+
+dendrogram(D)
+
+# best_silhouette(-0.0067, score, D, k)
 
 # 5:
-# 25 (14): -0.062
+# 25 (15): -0.0767      -0.0067
 # 88 (18): -0.109
 # 110 (18): -0.109
 
 # https://nlp.stanford.edu/IR-book/html/htmledition/evaluation-of-clustering-1.html
+# https://stats.stackexchange.com/questions/15158/precision-and-recall-for-clustering
