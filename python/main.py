@@ -1,4 +1,3 @@
-from scipy.spatial.distance import pdist
 from sklearn.metrics.pairwise import pairwise_distances
 from sklearn.metrics import silhouette_score
 from numpy import genfromtxt
