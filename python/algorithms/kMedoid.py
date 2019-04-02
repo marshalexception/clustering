@@ -38,7 +38,7 @@ def kMedoids(D, k, tmax=100):
     M = np.array(valid_medoid_inds)
     np.random.shuffle(M)
     M = np.sort(M[:k])
-
+    print("medoid", M)
     # create a copy of the array of medoid indices
     Mnew = np.copy(M)
 

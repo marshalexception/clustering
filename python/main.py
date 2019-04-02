@@ -1,3 +1,4 @@
+from scipy.spatial.distance import pdist
 from sklearn.metrics.pairwise import pairwise_distances
 from sklearn.metrics import silhouette_score
 from numpy import genfromtxt
@@ -30,17 +31,20 @@ def best_silhouette(border, score, matrix, k):
     print(cur_score)
 
 
-data = genfromtxt('..\\data\\pfister\\vectors_5.txt', delimiter=";")
+data = genfromtxt('..\\data\\pfister\\vectors_25.txt', delimiter=";")
 """bei vectors_5 nicht die ersten 5 Graphen sondern manuelle Auswahl
     Cluster (0,2), (1,4) und (3) """
 
 """Distanzmatrix"""
 D = pairwise_distances(data, metric='euclidean')
+print(D)
 DD = genfromtxt('..\\data\\pfister\\matrix_25.txt', delimiter=";")
-
+print(DD)
+tmp = 1 - DD
+print(tmp)
 """K Cluster"""
-k = 4
-M, C = kMedoid.kMedoids(D, k)
+k = 14
+M, C = kMedoid.kMedoids(tmp, k)
 
 labels = []
 
@@ -54,7 +58,7 @@ for label in C:
         labels.append(label)
         print("Graph:", point_idx, "Cluster:", label)
 
-score = silhouette_score(D, labels, metric="euclidean")
+score = silhouette_score(tmp, labels, metric="euclidean")
 print(score)
 for label in C:
     for point_idx in C[label]:
@@ -70,9 +74,9 @@ for label in C:
 # plt.ylabel("Cluster")
 # plt.show()
 
-dendrogram(D)
+# dendrogram(D)
 
-# best_silhouette(-0.0067, score, D, k)
+best_silhouette(-0.104, score, tmp, k)
 
 # 5:
 # 25 (15): -0.0767      -0.0067
