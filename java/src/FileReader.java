@@ -1,9 +1,4 @@
-package src;
-
-import java.io.DataInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +42,25 @@ public class FileReader {
         double[][] output = new double[lines.size()][0];
         lines.toArray(output);
         return output;
+    }
+
+    public void writeToFile (String path, double[][] matrix) {
+        StringBuilder builder = new StringBuilder();
+        try (PrintWriter writer = new PrintWriter(path)) {
+            for (int i = 0; i < matrix.length; i++) {
+                for (int j = 0; j < matrix.length; j++) {
+                    if (j == matrix.length -1) {
+                        builder.append(matrix[i][j] +"\n");
+                    } else {
+                        builder.append(matrix[i][j] + ";");
+                    }
+                }
+            }
+            writer.write(builder.toString());
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     public String getName() {
