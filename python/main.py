@@ -30,18 +30,18 @@ def best_silhouette(border, score, matrix, k):
     print(cur_score)
 
 
-data = genfromtxt('..\\data\\pfister\\vectors_new.txt', delimiter=";")
+data = genfromtxt('..\\data\\pfister\\vectors_5.txt', delimiter=";")
 """bei vectors_5 nicht die ersten 5 Graphen sondern manuelle Auswahl
     Cluster (0,2), (1,4) und (3) """
 
 """Distanzmatrix"""
 D = pairwise_distances(data, metric='euclidean')
 # print(D)
-DD = genfromtxt('..\\data\\symmetrized\\symmetrized_matrix_new.txt', delimiter=";")
+DD = genfromtxt('..\\data\\symmetrized\\avg_symmetrized_matrix_new.txt', delimiter=";")
 # print(DD)
 """K Cluster"""
-k = 18
-M, C = kMedoid.kMedoids(DD, k)
+k = 3
+M, C = kMedoid.kMedoids(D, k)
 
 labels = []
 
@@ -55,7 +55,7 @@ for label in C:
         labels.append(label)
         print("Graph:", point_idx, "Cluster:", label)
 
-score = silhouette_score(DD, labels, metric="euclidean")
+score = silhouette_score(D, labels, metric="euclidean")
 print(score)
 for label in C:
     for point_idx in C[label]:
@@ -73,7 +73,7 @@ for label in C:
 
 # dendrogram(D)
 
-# best_silhouette(-0.23, score, DD, k)
+# best_silhouette(-0.23, score, D, k)
 
 # 5:
 # 25 (15): -0.0767      -0.0067

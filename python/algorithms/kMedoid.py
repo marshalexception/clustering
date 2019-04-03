@@ -38,7 +38,7 @@ def kMedoids(D, k, tmax=100):
     M = np.array(valid_medoid_inds)
     np.random.shuffle(M)
     M = np.sort(M[:k])
-    print("medoid", M)
+    print("Initial-Medoiden", M)
     # create a copy of the array of medoid indices
     Mnew = np.copy(M)
 
@@ -49,6 +49,7 @@ def kMedoids(D, k, tmax=100):
         J = np.argmin(D[:,M], axis=1)
         for kappa in range(k):
             C[kappa] = np.where(J==kappa)[0]
+            print("temporäre Cluster:", C)
         # update cluster medoids
         for kappa in range(k):
             J = np.mean(D[np.ix_(C[kappa],C[kappa])],axis=1)
