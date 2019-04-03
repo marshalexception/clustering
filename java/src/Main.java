@@ -1,7 +1,8 @@
 public class Main {
 
     public static void main(String[] args) {
-        String path = "data/pfister/matrix_new.txt";
+        String name = "matrix_new.txt";
+        String path = "data/pfister/" + name;
         String regex = ";";
         FileReader f = new FileReader(path, regex);
 
@@ -13,11 +14,11 @@ public class Main {
         printMatrix(distance_matrix);
 
         Symmetrization cur = Symmetrization.AVG;
-        System.out.println("symmetrisierte Distanzmatrix (" + cur + "):");
+        //System.out.println("symmetrisierte Distanzmatrix (" + cur + "):");
         double[][] symmetrized = symmetrize(distance_matrix, cur);
-        printMatrix(symmetrized);
+        //printMatrix(symmetrized);
 
-        String newPath = "data/symmetrized/symmetrized_matrix_new.txt";
+        String newPath = "data/symmetrized/avg_symmetrized_" + name;
         System.out.println("symmetrisierte Distanzmatrix in Datei " + newPath + " geschrieben");
         f.writeToFile(newPath, symmetrized);
     }

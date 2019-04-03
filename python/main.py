@@ -30,20 +30,18 @@ def best_silhouette(border, score, matrix, k):
     print(cur_score)
 
 
-data = genfromtxt('..\\data\\pfister\\vectors_25.txt', delimiter=";")
+data = genfromtxt('..\\data\\pfister\\vectors_new.txt', delimiter=";")
 """bei vectors_5 nicht die ersten 5 Graphen sondern manuelle Auswahl
     Cluster (0,2), (1,4) und (3) """
 
 """Distanzmatrix"""
 D = pairwise_distances(data, metric='euclidean')
-print(D)
-DD = genfromtxt('..\\data\\pfister\\matrix_25.txt', delimiter=";")
-print(DD)
-tmp = 1 - DD
-print(tmp)
+# print(D)
+DD = genfromtxt('..\\data\\symmetrized\\symmetrized_matrix_new.txt', delimiter=";")
+# print(DD)
 """K Cluster"""
-k = 14
-M, C = kMedoid.kMedoids(tmp, k)
+k = 18
+M, C = kMedoid.kMedoids(DD, k)
 
 labels = []
 
@@ -57,7 +55,7 @@ for label in C:
         labels.append(label)
         print("Graph:", point_idx, "Cluster:", label)
 
-score = silhouette_score(tmp, labels, metric="euclidean")
+score = silhouette_score(DD, labels, metric="euclidean")
 print(score)
 for label in C:
     for point_idx in C[label]:
@@ -75,11 +73,11 @@ for label in C:
 
 # dendrogram(D)
 
-best_silhouette(-0.104, score, tmp, k)
+# best_silhouette(-0.23, score, DD, k)
 
 # 5:
 # 25 (15): -0.0767      -0.0067
-# 88 (18): -0.109
+# 88 (18): -0.109       -0.23
 # 110 (18): -0.109
 
 # https://nlp.stanford.edu/IR-book/html/htmledition/evaluation-of-clustering-1.html
