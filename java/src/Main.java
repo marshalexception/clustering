@@ -1,8 +1,8 @@
 public class Main {
 
     public static void main(String[] args) {
-        String name = "matrix_new.txt";
-        String path = "data/pfister/" + name;
+        String name = "tmp.csv";
+        String path = "data/" + name;
         String regex = ";";
         FileReader f = new FileReader(path, regex);
 
