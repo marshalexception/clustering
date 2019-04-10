@@ -1,8 +1,10 @@
 from sklearn.metrics.pairwise import pairwise_distances
-from sklearn.metrics import silhouette_score
+import sklearn.metrics as skm
+#from sklearn.metrics import silhouette_score
 from numpy import genfromtxt
 import matplotlib.pyplot as plt
 from scipy.cluster.hierarchy import dendrogram
+
 
 """Pytest installieren: python -m pip install pytest"""
 
@@ -24,7 +26,7 @@ def best_silhouette(border, score, matrix, k):
             for point in cur_c[cur_label]:
                 cur_labels.append(cur_label)
                 print("Graph:", point, "Cluster:", cur_label)
-        cur_score = silhouette_score(matrix, cur_labels, metric="euclidean")
+        cur_score = skm.silhouette_score(matrix, cur_labels, metric="euclidean")
         i = i + 1
         print(i, "_______")
     print(cur_score)
@@ -37,11 +39,11 @@ data = genfromtxt('..\\data\\pfister\\vectors_5.txt', delimiter=";")
 """Distanzmatrix"""
 D = pairwise_distances(data, metric='euclidean')
 # print(D)
-DD = genfromtxt('..\\data\\symmetrized\\avg_symmetrized_matrix_new.txt', delimiter=";")
+DD = genfromtxt('..\\data\\symmetrized\\avg_symmetrized_matrix_lenz.csv', delimiter=";")
 # print(DD)
 """K Cluster"""
-k = 3
-M, C = kMedoid.kMedoids(D, k)
+k = 18
+M, C = kMedoid.kMedoids(DD, k)
 
 labels = []
 
@@ -55,8 +57,9 @@ for label in C:
         labels.append(label)
         print("Graph:", point_idx, "Cluster:", label)
 
-score = silhouette_score(D, labels, metric="euclidean")
-print(score)
+score = skm.silhouette_score(DD, labels, metric="euclidean")
+print('silhouette-score:', score)
+
 for label in C:
     for point_idx in C[label]:
         if label == 0:

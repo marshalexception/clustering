@@ -1,7 +1,9 @@
+package src;
+
 public class Main {
 
     public static void main(String[] args) {
-        String name = "tmp.csv";
+        String name = "matrix_lenz.csv";
         String path = "data/" + name;
         String regex = ";";
         FileReader f = new FileReader(path, regex);
