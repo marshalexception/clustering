@@ -42,7 +42,7 @@ D = pairwise_distances(data, metric='euclidean')
 DD = genfromtxt('..\\data\\symmetrized\\avg_symmetrized_matrix_lenz.csv', delimiter=";")
 # print(DD)
 """K Cluster"""
-k = 18
+k = 3
 M, C = kMedoid.kMedoids(DD, k)
 
 labels = []
@@ -76,12 +76,12 @@ for label in C:
 
 # dendrogram(D)
 
-# best_silhouette(-0.23, score, D, k)
+# best_silhouette(0.06498913421018607, score, DD, k)
 
-# 5:
-# 25 (15): -0.0767      -0.0067
-# 88 (18): -0.109       -0.23
-# 110 (18): -0.109
+# eval:
+# avg   0.1001063545848603 (k = 2)      0.06498913421018607 (k = 3)
+# min   0.09179591158425277 (k = 2)     0.05667220812087653 (k = 3)
+# max   0.0920887877300312  (k = 2)     0.04712664926968676 (k = 3)
 
 # https://nlp.stanford.edu/IR-book/html/htmledition/evaluation-of-clustering-1.html
 # https://stats.stackexchange.com/questions/15158/precision-and-recall-for-clustering

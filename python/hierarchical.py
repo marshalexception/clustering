@@ -4,12 +4,12 @@ from scipy.cluster.hierarchy import dendrogram, linkage
 
 from scipy.spatial.distance import pdist
 
-data = genfromtxt('..\\data\\pfister\\matrix_full.txt', delimiter=";")
+data = genfromtxt('..\\data\\pfister\\matrix_5.txt', delimiter=";")
 print(data)
 print(pdist(data))
 linked = linkage(data, 'average')
 # single, complete, average, weighted, centroid, median, ward
-
+print(linked)
 # labelList = range(1, 6)
 
 plt.figure(figsize=(10, 7))
