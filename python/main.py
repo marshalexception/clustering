@@ -3,6 +3,7 @@ import sklearn.metrics as skm
 #from sklearn.metrics import silhouette_score
 from numpy import genfromtxt
 import matplotlib.pyplot as plt
+import csv
 from scipy.cluster.hierarchy import dendrogram
 
 
@@ -31,6 +32,17 @@ def best_silhouette(border, score, matrix, k):
         print(i, "_______")
     print(cur_score)
 
+def export(C):
+    """Export in .txt Datei des Clusterings"""
+    with open('..\\data\\output\\result.csv', 'w', newline='') as file:
+        header = ['Graph', 'Cluster']
+        writer = csv.DictWriter(file, fieldnames = header)
+        writer.writeheader()
+        for l in C:
+            for p in C[l]:
+                writer.writerow({'Graph': p, 'Cluster': l})
+    file.close()
+    print('Datei exportiert!')
 
 data = genfromtxt('..\\data\\pfister\\vectors_5.txt', delimiter=";")
 """bei vectors_5 nicht die ersten 5 Graphen sondern manuelle Auswahl
@@ -59,6 +71,7 @@ for label in C:
 
 score = skm.silhouette_score(DD, labels, metric="euclidean")
 print('silhouette-score:', score)
+export(C)
 
 for label in C:
     for point_idx in C[label]:
