@@ -32,9 +32,10 @@ def best_silhouette(border, score, matrix, k):
         print(i, "_______")
     print(cur_score)
 
-def export(C):
-    """Export in .txt Datei des Clusterings"""
-    with open('..\\data\\output\\result.csv', 'w', newline='') as file:
+def export(C, i):
+    """Export in .csv-Datei des Clusterings"""
+    name = 'result-' + str(i) + '.csv'
+    with open('..\\data\\output\\' + name, 'w', newline='') as file:
         header = ['Graph', 'Cluster']
         writer = csv.DictWriter(file, fieldnames = header)
         writer.writeheader()
@@ -54,7 +55,7 @@ D = pairwise_distances(data, metric='euclidean')
 DD = genfromtxt('..\\data\\symmetrized\\avg_symmetrized_matrix_lenz.csv', delimiter=";")
 # print(DD)
 """K Cluster"""
-k = 3
+k = 18
 M, C = kMedoid.kMedoids(DD, k)
 
 labels = []
@@ -71,7 +72,10 @@ for label in C:
 
 score = skm.silhouette_score(DD, labels, metric="euclidean")
 print('silhouette-score:', score)
-export(C)
+
+for i in range(0, 10):
+    M, C = kMedoid.kMedoids(DD, k)
+    export(C, i+1)
 
 for label in C:
     for point_idx in C[label]:
