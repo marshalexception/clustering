@@ -41,7 +41,7 @@ def kMedoids(D, k, tmax=100):
     # print("Initial-Medoiden", M)
     # create a copy of the array of medoid indices
     Mnew = np.copy(M)
-
+    i = 0
     # initialize a dictionary to represent clusters
     C = {}
     for t in xrange(tmax):
@@ -55,6 +55,8 @@ def kMedoids(D, k, tmax=100):
             J = np.mean(D[np.ix_(C[kappa],C[kappa])],axis=1)
             j = np.argmin(J)
             Mnew[kappa] = C[kappa][j]
+            i = i + 1
+            # print(i, M)
         np.sort(Mnew)
         # check for convergence
         if np.array_equal(M, Mnew):

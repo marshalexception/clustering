@@ -3,6 +3,7 @@ import sklearn.metrics as skm
 from numpy import genfromtxt
 import matplotlib.pyplot as plt
 import csv
+import numpy as np
 from scipy.cluster.hierarchy import dendrogram, linkage, fcluster
 
 from algorithms import kMedoid
@@ -61,7 +62,6 @@ def find_best_k(DD, lb, ub):
 def print_clustering(M, C):
     ### Clusteringergebnisse ausgeben ###
     print('medoids:', M)
-    print('')
     print('clustering result:')
     for label in C:
         for point_idx in C[label]:
@@ -91,22 +91,25 @@ def plot(C):
 
 
 def k_medoid():
-    k = 5
-    M, C = kMedoid.kMedoids(DD, k)
+    k = 3
+    M, C = kMedoid.kMedoids(data_matrix, k)
 
     labels = []
     for label in C:
         for point_idx in C[label]:
             labels.append(label)
 
-    score = skm.silhouette_score(DD, labels, metric="euclidean")
+    # export(C, 0)
+    # print_clustering(M, C)
+    score = skm.silhouette_score(data_matrix, labels, metric="euclidean")
     print('silhouette-score:', score)
     # print('calinski-harabaz-score:', skm.calinski_harabaz_score(data, labels))
     # print('davies-bouldin-score:', skm.davies_bouldin_score(data, labels))
 
     """interne Evaluation (Silhouette): optimales k und besten Koeffizientenwert finden"""
-    # find_best_k(DD, 2, 18)
-    # best_silhouette(-1, score, DD, k)
+    # for i in range(0, 10):
+    #   find_best_k(data_matrix, 2, 18)
+    # best_silhouette(0.0567, score, data_matrix, k)
 
     """externe Evaluation (Rand-Index): 10x durchlaufen lassen (gleiche Anzahl k)"""
     # for i in range(0, 10):
@@ -123,7 +126,7 @@ def k_medoid():
 
 def agnes():
     data = data_matrix
-    linked = linkage(data, 'average')
+    linked = linkage(data)
     f = fcluster(linked, t=1)
     # single, complete, average, weighted, centroid, median, ward
     # labelList = range(1, 6)
@@ -131,7 +134,8 @@ def agnes():
     # plt.figure(figsize=(20, 10))
     dendrogram(linked, orientation='top', distance_sort='ascending')
     print('AGNES - silhouette-score:', skm.silhouette_score(data, f, metric="euclidean"))
-    plt.show()
+    print('AGNES - calinski-harabaz-score:', skm.calinski_harabaz_score(data, f))
+    # plt.show()
     # https://docs.scipy.org/doc/scipy/reference/cluster.hierarchy.html
 
 
@@ -140,11 +144,11 @@ def agnes():
 data_vectors = genfromtxt('..\\data\\lenz\\vectors_lenz.txt', delimiter=";")
 # bei vectors_5 nicht die ersten 5 Graphen sondern manuelle Auswahl
 # Cluster (0,2), (1,4) und (3)
-data_matrix = genfromtxt('..\\data\\symmetrized\\avg_symmetrized_matrix_lenz.csv', delimiter=";")
+data_matrix = np.array(genfromtxt('..\\data\\symmetrized\\avg_symmetrized_matrix_lenz.csv', delimiter=";"))
 ##### Distanzmatrizen #####
 D = pairwise_distances(data_vectors, metric='euclidean')
-DD = genfromtxt('..\\data\\symmetrized\\min_symmetrized_matrix_lenz.csv', delimiter=";")
+# DD = genfromtxt('..\\data\\symmetrized\\min_symmetrized_matrix_lenz.csv', delimiter=";")
 ##### Algorithmen #####
-k_medoid()
+# k_medoid()
 agnes()
 ###################################
