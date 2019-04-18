@@ -1,4 +1,4 @@
-package src;
+
 
 public class Main {
 
@@ -15,12 +15,12 @@ public class Main {
         double[][] distance_matrix = similarityToDistanceMatrix(similarity_matrix);
         printMatrix(distance_matrix);
 
-        Symmetrization cur = Symmetrization.AVG;
+        Symmetrization cur = Symmetrization.MAX;
         //System.out.println("symmetrisierte Distanzmatrix (" + cur + "):");
-        double[][] symmetrized = symmetrize(distance_matrix, cur);
+        double[][] symmetrized = symmetrize(similarity_matrix, cur);
         //printMatrix(symmetrized);
 
-        String newPath = "data/symmetrized/avg_symmetrized_" + name;
+        String newPath = "data/max_symmetrized_" + name;
         System.out.println("symmetrisierte Distanzmatrix in Datei " + newPath + " geschrieben");
         f.writeToFile(newPath, symmetrized);
     }

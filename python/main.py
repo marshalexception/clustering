@@ -114,6 +114,8 @@ def k_medoid():
 
     # export(C, 0)
     # print_clustering(M, C)
+    print(labels)
+    print_clustering(M, C)
     score = skm.silhouette_score(data_matrix, labels, metric="euclidean")
     print('silhouette-score:', score)
     # print('calinski-harabaz-score:', skm.calinski_harabaz_score(data, labels))
@@ -122,7 +124,7 @@ def k_medoid():
     """interne Evaluation (Silhouette): optimales k und besten Koeffizientenwert finden"""
     # for i in range(0, 10):
     #   find_best_k(data_matrix, 2, 18)
-    best_silhouette(-0.0100, score, data_matrix, k)
+    # best_silhouette(-0.0100, score, data_matrix, k)
 
     """externe Evaluation (Rand-Index): n Durchläufe (gleiche Anzahl k)"""
     n = 10
