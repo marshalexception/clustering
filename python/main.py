@@ -1,5 +1,6 @@
 from sklearn.metrics.pairwise import pairwise_distances
 import sklearn.metrics as skm
+from sklearn.cluster import AgglomerativeClustering
 from numpy import genfromtxt
 import matplotlib.pyplot as plt
 import csv
@@ -10,9 +11,11 @@ from algorithms import kMedoid
 
 # Pytest installieren: python -m pip install pytest
 
+#-------------------------------------------------------
+# Methode für besten Silhouettenkoeffizient (iterativ)
+
 
 def best_silhouette(border, score, matrix, k):
-    ### Methode für besten Silhouettenkoeffizient (iterativ) ###
     i = 1
     cur_score = score
     while cur_score < border:
@@ -29,12 +32,14 @@ def best_silhouette(border, score, matrix, k):
         print(i, "_______")
     print('K-Medoid - silhouette-score:', cur_score)
     print('calinski-harabaz-score:', skm.calinski_harabaz_score(matrix, cur_labels))
-    # export(cur_c, i)
+    export(cur_c, 0, 'min', 'k-medoid')
+
+#-------------------------------------------------------
+# Export in .csv-Datei des Clusterings
 
 
-def export(C, i):
-    ### Export in .csv-Datei des Clusterings ###
-    name = 'result-' + str(i) + '.csv'
+def export(C, i, strategy, algorithm):
+    name = str(strategy) + '_' + str(algorithm) + '_result_' + str(i) + '.csv'
     with open('..\\data\\output\\' + name, 'w', newline='') as file:
         header = ['Graph', 'Cluster']
         writer = csv.DictWriter(file, fieldnames = header)
@@ -45,9 +50,11 @@ def export(C, i):
     file.close()
     print('Datei exportiert!')
 
+#-------------------------------------------------------
+# optimale Clusteranzahl für k-medoid finden
+
 
 def find_best_k(DD, lb, ub):
-    ### optimale Clusteranzahl für k-medoid finden ###
     for k in range(lb, ub):
         print('k:', k)
         M, C = kMedoid.kMedoids(DD, k)
@@ -58,9 +65,11 @@ def find_best_k(DD, lb, ub):
         score = skm.silhouette_score(DD, labels, metric="euclidean")
         print('K-Medoid - silhouette-score:', score)
 
+#-------------------------------------------------------
+# Clusteringergebnisse ausgeben
+
 
 def print_clustering(M, C):
-    ### Clusteringergebnisse ausgeben ###
     print('medoids:', M)
     print('clustering result:')
     for label in C:
@@ -68,8 +77,11 @@ def print_clustering(M, C):
             print("Graph:", point_idx, "Cluster:", label)
 
 
+#-------------------------------------------------------
+# visuelle Darstellung des Clustering (fehlerhaft)
+
+
 def plot(C):
-    ### visuelle Darstellung des Clustering (fehlerhaft) ###
     for label in C:
         for point_idx in C[label]:
             if label == 0:
@@ -87,11 +99,12 @@ def plot(C):
     # dendrogram(D)
 
 
-"""K-Medoid"""
+#-------------------------------------------------------
+# K-Medoid
 
 
 def k_medoid():
-    k = 3
+    k = 4
     M, C = kMedoid.kMedoids(data_matrix, k)
 
     labels = []
@@ -109,46 +122,66 @@ def k_medoid():
     """interne Evaluation (Silhouette): optimales k und besten Koeffizientenwert finden"""
     # for i in range(0, 10):
     #   find_best_k(data_matrix, 2, 18)
-    # best_silhouette(0.0567, score, data_matrix, k)
+    best_silhouette(-0.0100, score, data_matrix, k)
 
-    """externe Evaluation (Rand-Index): 10x durchlaufen lassen (gleiche Anzahl k)"""
-    # for i in range(0, 10):
-    #   M, C = kMedoid.kMedoids(DD, k)
-    # export(C, i+1)
+    """externe Evaluation (Rand-Index): n Durchläufe (gleiche Anzahl k)"""
+    n = 10
+    silhouettes = []
+    calinski_harabaz_scores = []
+    for i in range(0, n):
+      labels = []
+      # M, C = kMedoid.kMedoids(data_matrix, k)
+      # for label in C:
+        #   for point_idx in C[label]:
+          #     labels.append(label)
+      # silhouettes.append(skm.silhouette_score(data_matrix, labels, metric="euclidean"))
+      # calinski_harabaz_scores.append(skm.calinski_harabaz_score(data_matrix, labels))
+      # export(C, i+1, 'min', 'k-medoid')
+    # print('durchschnittlicher silhouette-score:', np.sum(silhouettes)/n)
+    # print('durchschnittlicher calinski-harabaz-score:', np.sum(calinski_harabaz_scores)/n)
 
     # https://nlp.stanford.edu/IR-book/html/htmledition/evaluation-of-clustering-1.html
     # https://stats.stackexchange.com/questions/15158/precision-and-recall-for-clustering
     # https://scikit-learn.org/stable/modules/clustering.html#fowlkes-mallows-scores
 
 
-"""AGNES"""
+#-------------------------------------------------------
+# AGNES
 
 
 def agnes():
     data = data_matrix
-    linked = linkage(data)
-    f = fcluster(linked, t=1)
+    linked = linkage(data, method='centroid')
+    linked_labels = fcluster(linked, t=1)
     # single, complete, average, weighted, centroid, median, ward
     # labelList = range(1, 6)
 
     # plt.figure(figsize=(20, 10))
-    dendrogram(linked, orientation='top', distance_sort='ascending')
-    print('AGNES - silhouette-score:', skm.silhouette_score(data, f, metric="euclidean"))
-    print('AGNES - calinski-harabaz-score:', skm.calinski_harabaz_score(data, f))
-    # plt.show()
+    # dendrogram(linked, orientation='top', distance_sort='ascending')
+    # print('AGNES - silhouette-score:', skm.silhouette_score(data, linked_labels, metric="euclidean"))
+    # print('AGNES - calinski-harabaz-score:', skm.calinski_harabaz_score(data, linked_labels))
+
+    cluster = AgglomerativeClustering(n_clusters=5, linkage='single').fit(data)
+    dendrogram(cluster.children_, orientation='top', distance_sort='ascending')
+    plt.show()
+    # print('AGNES - silhouette-score:', skm.silhouette_score(data, cluster.labels_, metric="euclidean"))
+    # print('AGNES - calinski-harabaz-score:', skm.calinski_harabaz_score(data, cluster.labels_))
     # https://docs.scipy.org/doc/scipy/reference/cluster.hierarchy.html
 
 
-###################################
-##### Data #####
+#-------------------------------------------------------
+## Main
+# Data
 data_vectors = genfromtxt('..\\data\\lenz\\vectors_lenz.txt', delimiter=";")
 # bei vectors_5 nicht die ersten 5 Graphen sondern manuelle Auswahl
 # Cluster (0,2), (1,4) und (3)
-data_matrix = np.array(genfromtxt('..\\data\\symmetrized\\avg_symmetrized_matrix_lenz.csv', delimiter=";"))
-##### Distanzmatrizen #####
+data_matrix = np.array(genfromtxt('..\\data\\symmetrized\\min_symmetrized_matrix_lenz.csv', delimiter=";"))
+
+# Distanzmatrizen
 D = pairwise_distances(data_vectors, metric='euclidean')
 # DD = genfromtxt('..\\data\\symmetrized\\min_symmetrized_matrix_lenz.csv', delimiter=";")
-##### Algorithmen #####
-# k_medoid()
-agnes()
-###################################
+
+# Algorithmen
+k_medoid()
+# agnes()
+#-------------------------------------------------------
