@@ -6,24 +6,24 @@ public class Main {
      * @param args
      */
     public static void main(String[] args) {
-        String name = "matrix_lenz.csv";
+        String name = "matrix_lenz_1.0_0.6.csv";
         String path = "data/lenz/" + name;
         String regex = ";";
         FileReader f = new FileReader(path, regex);
 
-        System.out.println("Ähnlichkeitsmatrix: ");
+        //System.out.println("Ähnlichkeitsmatrix: ");
         double[][] similarity_matrix = f.readFile();
-        printMatrix(similarity_matrix);
+        //printMatrix(similarity_matrix);
         System.out.println("Distanzmatrix: ");
         double[][] distance_matrix = similarityToDistanceMatrix(similarity_matrix);
         printMatrix(distance_matrix);
 
-        Symmetrization cur = Symmetrization.MAX;
-        //System.out.println("symmetrisierte Distanzmatrix (" + cur + "):");
-        double[][] symmetrized = symmetrize(similarity_matrix, cur);
-        //printMatrix(symmetrized);
+        Symmetrization cur = Symmetrization.AVG;
+        System.out.println("symmetrisierte Distanzmatrix (" + cur + "):");
+        double[][] symmetrized = symmetrize(distance_matrix, cur);
+        printMatrix(symmetrized);
 
-        String newPath = "data/max_symmetrized_" + name;
+        String newPath = "data/symmetrized/avg_symmetrized_" + name;
         System.out.println("symmetrisierte Distanzmatrix in Datei " + newPath + " geschrieben");
         f.writeToFile(newPath, symmetrized);
     }
