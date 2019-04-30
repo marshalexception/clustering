@@ -5,7 +5,8 @@ from numpy import genfromtxt
 import matplotlib.pyplot as plt
 import csv
 import numpy as np
-from scipy.cluster.hierarchy import dendrogram, linkage, fcluster
+from scipy.cluster.hierarchy import dendrogram, linkage, fcluster, leaders
+from scipy.spatial.distance import pdist
 
 from algorithms import kMedoid
 
@@ -32,7 +33,7 @@ def best_silhouette(border, score, matrix, k):
         print(i, "_______")
     print('K-Medoid - silhouette-score:', cur_score)
     print('calinski-harabaz-score:', skm.calinski_harabaz_score(matrix, cur_labels))
-    export(cur_c, 0, 'min', 'k-medoid')
+    # export(cur_c, 0, 'min', 'k-medoid')
 
 #-------------------------------------------------------
 # Export in .csv-Datei des Clusterings
@@ -48,7 +49,7 @@ def export(C, i, strategy, algorithm):
             for p in C[l]:
                 writer.writerow({'Graph': p, 'Cluster': l})
     file.close()
-    print('Datei exportiert!')
+    print('Datei ' + name + ' exportiert!')
 
 #-------------------------------------------------------
 # optimale Clusteranzahl für k-medoid finden
@@ -104,7 +105,7 @@ def plot(C):
 
 
 def k_medoid():
-    k = 4
+    k = 2
     M, C = kMedoid.kMedoids(data_matrix, k)
 
     labels = []
@@ -124,7 +125,7 @@ def k_medoid():
     """interne Evaluation (Silhouette): optimales k und besten Koeffizientenwert finden"""
     # for i in range(0, 10):
     #   find_best_k(data_matrix, 2, 18)
-    # best_silhouette(-0.0100, score, data_matrix, k)
+    # best_silhouette(0.1, score, data_matrix, k)
 
     """externe Evaluation (Rand-Index): n Durchläufe (gleiche Anzahl k)"""
     n = 10
@@ -152,23 +153,42 @@ def k_medoid():
 
 
 def agnes():
-    data = data_matrix
+    data = example
     linked = linkage(data, method='centroid')
-    linked_labels = fcluster(linked, t=1)
+    linked_labels = fcluster(linked, t=1, criterion='distance')
     # single, complete, average, weighted, centroid, median, ward
     # labelList = range(1, 6)
 
     # plt.figure(figsize=(20, 10))
-    # dendrogram(linked, orientation='top', distance_sort='ascending')
-    # print('AGNES - silhouette-score:', skm.silhouette_score(data, linked_labels, metric="euclidean"))
-    # print('AGNES - calinski-harabaz-score:', skm.calinski_harabaz_score(data, linked_labels))
+    dendrogram(linked, orientation='top', distance_sort='ascending')
+    print('AGNES - silhouette-score:', skm.silhouette_score(data, linked_labels, metric="euclidean"))
+    print('AGNES - calinski-harabaz-score:', skm.calinski_harabaz_score(data, linked_labels))
 
-    cluster = AgglomerativeClustering(n_clusters=5, linkage='single').fit(data)
-    dendrogram(cluster.children_, orientation='top', distance_sort='ascending')
+    # cluster = AgglomerativeClustering(n_clusters=5, linkage='single').fit(data)
+    # dendrogram(cluster.children_, orientation='top', distance_sort='ascending')
     plt.show()
     # print('AGNES - silhouette-score:', skm.silhouette_score(data, cluster.labels_, metric="euclidean"))
     # print('AGNES - calinski-harabaz-score:', skm.calinski_harabaz_score(data, cluster.labels_))
     # https://docs.scipy.org/doc/scipy/reference/cluster.hierarchy.html
+
+
+def plot_dendrogram(model, **kwargs):
+
+    # Children of hierarchical clustering
+    children = model.children_
+
+    # Distances between each pair of children
+    # Since we don't have this information, we can use a uniform one for plotting
+    distance = np.arange(children.shape[0])
+
+    # The number of observations contained in each cluster level
+    no_of_observations = np.arange(2, children.shape[0]+2)
+
+    # Create linkage matrix and then plot the dendrogram
+    linkage_matrix = np.column_stack([children, distance, no_of_observations]).astype(float)
+
+    # Plot the corresponding dendrogram
+    dendrogram(linkage_matrix, **kwargs)
 
 
 #-------------------------------------------------------
@@ -178,12 +198,18 @@ data_vectors = genfromtxt('..\\data\\lenz\\vectors_lenz.txt', delimiter=";")
 # bei vectors_5 nicht die ersten 5 Graphen sondern manuelle Auswahl
 # Cluster (0,2), (1,4) und (3)
 data_matrix = np.array(genfromtxt('..\\data\\symmetrized\\min_symmetrized_matrix_lenz.csv', delimiter=";"))
+example = np.array(genfromtxt('..\\data\\example.csv', delimiter=";"))
 
 # Distanzmatrizen
-D = pairwise_distances(data_vectors, metric='euclidean')
+D = pairwise_distances(example, metric='euclidean')
+print(D)
 # DD = genfromtxt('..\\data\\symmetrized\\min_symmetrized_matrix_lenz.csv', delimiter=";")
 
 # Algorithmen
-k_medoid()
+# k_medoid()
 # agnes()
+
+# plt.title('Hierarchical Clustering Dendrogram')
+# plot_dendrogram(clustering)
+# plt.show()
 #-------------------------------------------------------

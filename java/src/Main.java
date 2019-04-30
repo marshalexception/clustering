@@ -1,7 +1,10 @@
-
+package src;
 
 public class Main {
-
+    /**
+     * Main-Methode um Umwandlung von Ähnlichkeits- zu Distanzmatrix vorzunehmen
+     * @param args
+     */
     public static void main(String[] args) {
         String name = "matrix_lenz.csv";
         String path = "data/lenz/" + name;
@@ -25,6 +28,11 @@ public class Main {
         f.writeToFile(newPath, symmetrized);
     }
 
+    /**
+     * Methode, um Matrix über Konsole sichtbar zu machen
+     *
+     * @param matrix Matrix die ausgegeben werden soll
+     */
     private static void printMatrix (double[][] matrix) {
         for (int i = 0; i < matrix.length; i++) {
             System.out.print("|");
@@ -35,6 +43,12 @@ public class Main {
         }
     }
 
+    /**
+     * Wandelt die Input Ähnlichkeitsmatrix in eine Distanzmatrix (alle Werte -1) als Output
+     *
+     * @param similarity_matrix Ähnlichkeitsmatrix
+     * @return Distanzmatrix
+     */
     private static double[][] similarityToDistanceMatrix (double[][] similarity_matrix) {
         double[][] distance_matrix = new double[similarity_matrix.length][similarity_matrix.length];
         for (int i = 0; i < distance_matrix.length; i++) {
@@ -45,6 +59,12 @@ public class Main {
         return distance_matrix;
     }
 
+    /**
+     * Symmetrisiert Distanzmatrix nach angegebener Strategie
+     * @param similarities Distanzmatrix, die symmetrisiert werden soll
+     * @param sym Symmetrisierungsstrategie (min/ max/ avg)
+     * @return symmetrisierte Matrix
+     */
     private static double[][] symmetrize (double[][] similarities, Symmetrization sym) {
         double[][] result = new double[similarities.length][similarities.length];
         for (int i = 0; i < similarities.length; i++) {
@@ -66,6 +86,13 @@ public class Main {
         return result;
     }
 
+    /**
+     * Findet das Maximum von zwei Werten a und b
+     *
+     * @param a
+     * @param b
+     * @return Maximum
+     */
     private static double findMin(double a, double b) {
         if (a < b) {
             return a;
@@ -74,6 +101,13 @@ public class Main {
         }
     }
 
+    /**
+     * Findet das Minimum von zwei Werten a und b
+     *
+     * @param a
+     * @param b
+     * @return Minimum
+     */
     private static double findMax(double a, double b) {
         if (a > b) {
             return a;

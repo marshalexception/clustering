@@ -1,4 +1,4 @@
-
+package src;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -6,11 +6,23 @@ import java.util.List;
 
 public class FileReader {
     String name, regex;
+
+    /**
+     * Konstruktor um Matrix via Datei einzulesen
+     *
+     * @param name Name der Datei
+     * @param regex Trennzeichen zwischen den einzelnen Werten
+     */
     FileReader (String name, String regex) {
         this.name = name;
         this.regex = regex;
     }
 
+    /**
+     * liest Matrix ein und speichert sie in zweidimensionalem Array
+     *
+     * @return eingelesene Matrix
+     */
     public double[][] readFile() {
         List<double[]> lines = new ArrayList<>();
         FileInputStream fis = null;
@@ -46,6 +58,12 @@ public class FileReader {
         return output;
     }
 
+    /**
+     * Schreibt die symmetrisierte Matrix in eine neue Datei
+     *
+     * @param path Pfad der zu schreibenden Datei
+     * @param matrix Matrix die in die Datei geschrieben wird
+     */
     public void writeToFile (String path, double[][] matrix) {
         StringBuilder builder = new StringBuilder();
         try (PrintWriter writer = new PrintWriter(path)) {
@@ -65,18 +83,38 @@ public class FileReader {
         }
     }
 
+    /**
+     * Getter-Methode für den Dateinamen
+     *
+     * @return
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Setter-Methode für den Dateinamen
+     *
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Getter-Methode für das Trennzeichen
+     *
+     * @return
+     */
     public String getRegex() {
         return regex;
     }
 
+    /**
+     * Setter-Methode für das Trennzeichen
+     *
+     * @param regex
+     */
     public void setRegex(String regex) {
         this.regex = regex;
     }
